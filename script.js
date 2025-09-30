@@ -299,3 +299,17 @@ window.addEventListener('load', function () {
         }
     }, 6000); // Max 6 seconds for loading screen
 });
+
+const now = Date.now();
+const sessionVisited = sessionStorage.getItem('sessionVisited');
+const lastVisit = localStorage.getItem('lastVisitTime');
+
+// If no session visit or last visit was long ago, count as new visit.
+if (!sessionVisited || (lastVisit && now - lastVisit > 30 * 60 * 1000)) { // 30 minutes session timeout
+  totalVisitors++;
+  todayVisitors++;
+  localStorage.setItem('totalVisitors', totalVisitors);
+  localStorage.setItem('todayVisitors', todayVisitors);
+  localStorage.setItem('lastVisitTime', now);
+  sessionStorage.setItem('sessionVisited', 'true');
+}
