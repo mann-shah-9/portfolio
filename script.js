@@ -1,4 +1,5 @@
-// Mobile Navigation Toggle
+// =========== MOBILE NAVIGATION TOGGLE ===========
+
 const hamburger = document.querySelector('.hamburger');
 const navLinks = document.querySelector('.nav-links');
 
@@ -7,7 +8,7 @@ hamburger.addEventListener('click', function () {
     navLinks.classList.toggle('active');
 });
 
-// Close mobile menu when clicking on a link
+// Close mobile menu when clicking a nav link (better UX on mobiles)
 document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', () => {
         hamburger.classList.remove('active');
@@ -15,27 +16,28 @@ document.querySelectorAll('.nav-links a').forEach(link => {
     });
 });
 
-// Scroll animations
+
+// =========== SCROLL ANIMATIONS ===========
+
 function checkScroll() {
     const elements = document.querySelectorAll('.fadein-left, .fadein-right, .fadein-up, .fadein-down');
 
     elements.forEach(element => {
         const elementTop = element.getBoundingClientRect().top;
-        const elementVisible = 150;
+        const elementVisible = 150; // Distance from viewport bottom + offset for triggering
 
         if (elementTop < window.innerHeight - elementVisible) {
             element.classList.add('fadein');
         }
     });
 }
-
-// Initial check on page load
+// Run animation check on load and scroll
 document.addEventListener('DOMContentLoaded', checkScroll);
-
-// Check on scroll
 window.addEventListener('scroll', checkScroll);
 
-// Header scroll effect
+
+// =========== HEADER SCROLL EFFECT ===========
+
 window.addEventListener('scroll', function () {
     const header = document.querySelector('header');
     if (window.scrollY > 100) {
@@ -47,7 +49,9 @@ window.addEventListener('scroll', function () {
     }
 });
 
-// Smooth scrolling for anchor links
+
+// =========== SMOOTH ANCHOR SCROLLING ===========
+
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -58,14 +62,16 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         const targetElement = document.querySelector(targetId);
         if (targetElement) {
             window.scrollTo({
-                top: targetElement.offsetTop - 80,
+                top: targetElement.offsetTop - 80, // Offset for fixed header height
                 behavior: 'smooth'
             });
         }
     });
 });
 
-// Add active class to current section in navigation
+
+// =========== NAVIGATION ACTIVE LINK HIGHLIGHTING ===========
+
 window.addEventListener('scroll', function () {
     let current = '';
     const sections = document.querySelectorAll('section');
@@ -86,20 +92,24 @@ window.addEventListener('scroll', function () {
     });
 });
 
-// Form submission handling (if you add a contact form later)
+
+// =========== FORM SUBMISSION HANDLING ===========
+
 document.addEventListener('DOMContentLoaded', function () {
     const forms = document.querySelectorAll('form');
     forms.forEach(form => {
         form.addEventListener('submit', function (e) {
             e.preventDefault();
-            // Add form submission logic here
+            // Placeholder for form sending logic
             alert('Thank you for your message! I will get back to you soon.');
             form.reset();
         });
     });
 });
 
-// Horizontal Scroll Functionality
+
+// =========== HORIZONTAL SCROLL FUNCTIONALITY (CERTIFICATES) ===========
+
 document.addEventListener('DOMContentLoaded', function () {
     const container = document.querySelector('.certificates-container');
     const leftBtn = document.querySelector('.scroll-btn.left');
@@ -116,7 +126,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Update active dot based on scroll position
     container.addEventListener('scroll', () => {
         const scrollPercentage = container.scrollLeft / (container.scrollWidth - container.clientWidth);
         const activeIndex = Math.floor(scrollPercentage * dots.length);
@@ -126,7 +135,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Click on dots to scroll to specific position
     dots.forEach((dot, index) => {
         dot.addEventListener('click', () => {
             const scrollPosition = (index / dots.length) * (container.scrollWidth - container.clientWidth);
@@ -135,48 +143,39 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// Visitor Counter Functionality
+
+// =========== VISITOR COUNTER FUNCTIONALITY ===========
+
 document.addEventListener('DOMContentLoaded', function () {
-    // Initialize counters
     initializeVisitorCounter();
 
     function initializeVisitorCounter() {
-        // Get current date for today's count
         const today = new Date().toDateString();
 
-        // Get stored data from localStorage
         let totalVisitors = parseInt(localStorage.getItem('totalVisitors')) || 0;
         let todayVisitors = parseInt(localStorage.getItem('todayVisitors')) || 0;
         let lastVisitDate = localStorage.getItem('lastVisitDate');
 
-        // Check if it's a new day
         if (lastVisitDate !== today) {
             todayVisitors = 0;
             localStorage.setItem('lastVisitDate', today);
         }
 
-        // Check if this is a new visit (not page refresh)
         const sessionVisited = sessionStorage.getItem('sessionVisited');
         if (!sessionVisited) {
-            // Increment counters
             totalVisitors++;
             todayVisitors++;
-
-            // Update storage
             localStorage.setItem('totalVisitors', totalVisitors);
             localStorage.setItem('todayVisitors', todayVisitors);
             sessionStorage.setItem('sessionVisited', 'true');
         }
 
-        // Simulate online users (random between 1-10)
         const onlineUsers = Math.floor(Math.random() * 10) + 1;
 
-        // Animate counter updates
         animateCounter('visitorCount', totalVisitors);
         animateCounter('todayCount', todayVisitors);
         animateCounter('onlineCount', onlineUsers);
 
-        // Update online users every 30 seconds
         setInterval(() => {
             const newOnlineUsers = Math.floor(Math.random() * 10) + 1;
             animateCounter('onlineCount', newOnlineUsers);
@@ -185,140 +184,118 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function animateCounter(elementId, targetValue) {
         const element = document.getElementById(elementId);
+        if (!element) return;
         const currentValue = parseInt(element.textContent) || 0;
 
         if (currentValue === targetValue) return;
 
-        // Add animation class
         element.classList.add('updated');
 
-        // Remove animation class after animation completes
         setTimeout(() => {
             element.classList.remove('updated');
         }, 500);
 
-        // Update counter with animation
         let current = currentValue;
         const increment = targetValue > currentValue ? 1 : -1;
-        const stepTime = Math.abs(Math.floor(1000 / (targetValue - currentValue)));
+        const stepTime = Math.abs(Math.floor(1000 / Math.max(Math.abs(targetValue - currentValue), 1)));
 
         const timer = setInterval(() => {
             current += increment;
             element.textContent = current;
-
-            if (current === targetValue) {
-                clearInterval(timer);
-            }
+            if (current === targetValue) clearInterval(timer);
         }, stepTime);
     }
 
-    // Optional: Add real-time updates (every 5 minutes)
+    // Periodic update every 5 minutes for counters
     setInterval(() => {
         const totalVisitors = parseInt(localStorage.getItem('totalVisitors')) || 0;
         const todayVisitors = parseInt(localStorage.getItem('todayVisitors')) || 0;
 
         animateCounter('visitorCount', totalVisitors);
         animateCounter('todayCount', todayVisitors);
-    }, 300000); // 5 minutes
+    }, 300000);
 });
 
-// Advanced version with more realistic simulation
+
+// =========== SIMULATE REAL TRAFFIC PATTERNS ===========
+
 function simulateRealTraffic() {
-    // Simulate traffic patterns (more during day, less at night)
     const hour = new Date().getHours();
     let trafficMultiplier = 1;
 
     if (hour >= 9 && hour <= 17) {
-        // Business hours - higher traffic
-        trafficMultiplier = 1.5;
+        trafficMultiplier = 1.5; // Business hours
     } else if (hour >= 18 && hour <= 22) {
-        // Evening - moderate traffic
-        trafficMultiplier = 1.2;
+        trafficMultiplier = 1.2; // Evening
     } else {
-        // Night - lower traffic
-        trafficMultiplier = 0.8;
+        trafficMultiplier = 0.8; // Night time
     }
 
     return trafficMultiplier;
 }
 
-// Cyber Loader Functionality
-document.addEventListener('DOMContentLoaded', function() {
+
+// =========== CYBER LOADER FUNCTIONALITY ===========
+
+document.addEventListener('DOMContentLoaded', function () {
     const loader = document.getElementById('cyber-loader');
     const progressFill = document.querySelector('.progress-fill');
     const progressPercent = document.querySelector('.progress-percent');
     const statusText = document.querySelector('.status-text');
     const tips = document.querySelectorAll('.tip');
-    
+
     let progress = 0;
     let currentTip = 0;
-    
-    // Simulate loading process
+
     const loadingSimulation = setInterval(() => {
         progress += Math.random() * 8;
-        
+
         if (progress >= 100) {
             progress = 100;
             clearInterval(loadingSimulation);
-            
-            // Complete loading
             setTimeout(() => {
                 loader.style.opacity = '0';
-                setTimeout(() => {
-                    loader.style.display = 'none';
-                }, 500);
+                setTimeout(() => loader.style.display = 'none', 500);
             }, 500);
         }
-        
-        // Update progress
+
         progressFill.style.width = progress + '%';
         progressPercent.textContent = Math.floor(progress) + '%';
-        
-        // Update status text based on progress
         updateStatusText(progress);
-        
+
     }, 200);
-    
-    // Rotate security tips
+
     setInterval(() => {
         tips[currentTip].classList.remove('active');
         currentTip = (currentTip + 1) % tips.length;
         tips[currentTip].classList.add('active');
     }, 3000);
-    
+
     function updateStatusText(progress) {
-        if (progress < 25) {
-            statusText.textContent = 'System Scan';
-        } else if (progress < 50) {
-            statusText.textContent = 'Encrypting Connection';
-        } else if (progress < 75) {
-            statusText.textContent = 'Loading Modules';
-        } else {
-            statusText.textContent = 'Finalizing Security';
-        }
+        if (progress < 25) statusText.textContent = 'System Scan';
+        else if (progress < 50) statusText.textContent = 'Encrypting Connection';
+        else if (progress < 75) statusText.textContent = 'Loading Modules';
+        else statusText.textContent = 'Finalizing Security';
     }
-    
-    // Add some random glitch effects
+
     setInterval(() => {
         if (Math.random() > 0.7) {
-            document.querySelector('.glitch-text').style.animation = 'none';
-            setTimeout(() => {
-                document.querySelector('.glitch-text').style.animation = '';
-            }, 100);
+            const glitchText = document.querySelector('.glitch-text');
+            glitchText.style.animation = 'none';
+            setTimeout(() => glitchText.style.animation = '', 100);
         }
     }, 2000);
 });
 
-// Optional: Real page load detection
-window.addEventListener('load', function() {
-    // Force completion if natural load finishes first
+
+// =========== PAGE LOAD HANDLING ===========
+
+window.addEventListener('load', function () {
     setTimeout(() => {
         const loader = document.getElementById('cyber-loader');
         if (loader && loader.style.display !== 'none') {
             loader.style.opacity = '0';
-            setTimeout(() => {
-                loader.style.display = 'none';
-            }, 500);
+            setTimeout(() => loader.style.display = 'none', 500);
         }
-    }, 6000); // Maximum 6 seconds show time
+    }, 6000); // Max 6 seconds for loading screen
 });
