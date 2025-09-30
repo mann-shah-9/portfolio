@@ -1062,6 +1062,7 @@ header {
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
     margin-bottom: 60px;
+    margin-top: 60px;
 }
 
 /* Flip card container with perspective for 3D flip effect */
@@ -1263,7 +1264,7 @@ header {
 
 /* =========== COMPANIES SECTION =========== */
 
-/* Flex container for company cards, centered with gap and wrapping */
+/* Container to hold company cards with flex wrap */
 .companies-grid {
     display: flex;
     justify-content: center;
@@ -1272,17 +1273,18 @@ header {
     margin-top: 50px;
 }
 
-/* Fixed width and height for cards with perspective for 3D flip */
+/* Flip card container with flexible width, max width for desktop */
 .company-card {
-    width: 500px;
-    height: 500px;
-    perspective: 1000px;
-    /* Enables 3D transform space */
-    cursor: pointer;
-    /* Indicate interactivity */
+    perspective: 1000px; /* required for 3D flip */
+    cursor: pointer; /* pointer for interactivity */
+    width: 100%;
+    max-width: 500px; /* desktop max width */
+    height: auto;
+    aspect-ratio: 1 / 1; /* maintain square aspect ratio */
+    margin: 0 auto;
 }
 
-/* Inner flip card that rotates */
+/* Inner flipping card */
 .company-card-inner {
     position: relative;
     width: 100%;
@@ -1294,19 +1296,19 @@ header {
     border-radius: 10px;
 }
 
-/* Rotate on hover */
-.company-card:hover .company-card-inner {
+/* Flip on hover or touch (add .flipped class via JS for mobile) */
+.company-card:hover .company-card-inner,
+.company-card.flipped .company-card-inner {
     transform: rotateY(180deg);
 }
 
-/* Front and back faces of flip card share dimension */
+/* Front and back faces: full size, no overflow, backface hidden */
 .company-card-front,
 .company-card-back {
     position: absolute;
     width: 100%;
     height: 100%;
-    -webkit-backface-visibility: hidden;
-    /* Safari compatibility */
+    -webkit-backface-visibility: hidden; /* Safari */
     backface-visibility: hidden;
     border-radius: 10px;
     display: flex;
@@ -1314,40 +1316,88 @@ header {
     justify-content: center;
     align-items: center;
     padding: 20px;
+    box-sizing: border-box;
+    overflow-wrap: break-word; /* prevent overflow */
 }
 
-/* Front side with white background */
+/* Front side white background */
 .company-card-front {
     background-color: white;
 }
 
-/* Company logos constrained to max height */
+/* Company logo image scaled responsively */
 .company-card-front img {
     max-width: 100%;
     max-height: 80px;
     object-fit: contain;
 }
 
-/* Back side styling with light transparent blue */
+/* Back side with translucent blue background and black text */
 .company-card-back {
     background-color: rgba(131, 138, 228, 0.2);
     color: black;
     transform: rotateY(180deg);
     text-align: left;
+    overflow-y: auto; /* allow scroll if needed */
 }
 
-/* Heading on back */
+/* Back side heading */
 .company-card-back h3 {
     margin-bottom: 15px;
     font-size: 1.7rem;
     font-weight: 700;
+    word-break: break-word;
 }
 
-/* Paragraph on back */
+/* Back side paragraph */
 .company-card-back p {
     margin-bottom: 10px;
     font-size: 1.1rem;
     line-height: 1.4;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+/* ===== RESPONSIVE ===== */
+
+/* Tablets (max width 768px): reduce card size and text */
+@media (max-width: 768px) {
+    .company-card {
+        max-width: 420px;
+    }
+    .company-card-back h3 {
+        font-size: 1.3rem;
+    }
+    .company-card-back p {
+        font-size: 1rem;
+    }
+}
+
+/* Phones (max width 576px): full width cards, stacked layout */
+@media (max-width: 576px) {
+    .companies-grid {
+        flex-direction: column;
+        gap: 25px;
+        align-items: center;
+    }
+    .company-card {
+        max-width: 90vw;
+        height: auto; /* height auto for content */
+        aspect-ratio: auto;
+    }
+    .company-card-inner {
+        min-height: 280px; /* minimum height for usability */
+    }
+    .company-card-front img {
+        max-height: 50px;
+    }
+    .company-card-back h3 {
+        font-size: 1.1rem;
+        margin-bottom: 12px;
+    }
+    .company-card-back p {
+        font-size: 0.95rem;
+    }
 }
 
 /* =========== EDUCATION SECTION =========== */
@@ -1393,27 +1443,6 @@ header {
 
 /* Tablet devices (up to 768px) */
 @media (max-width: 768px) {
-
-    /* Reduce gap and width of company cards */
-    .companies-grid {
-        gap: 30px;
-        justify-content: center;
-    }
-
-    .company-card {
-        width: 420px;
-        height: 420px;
-    }
-
-    /* Scale down font sizes on card backs */
-    .company-card-back h3 {
-        font-size: 1.4rem;
-    }
-
-    .company-card-back p {
-        font-size: 1rem;
-    }
-
     /* Education padding reduced */
     #education {
         padding: 40px 15px;
@@ -1435,33 +1464,6 @@ header {
 
 /* Mobile devices (up to 576px) */
 @media (max-width: 576px) {
-
-    /* Company grid to single column for vertical scroll */
-    .companies-grid {
-        flex-direction: column;
-        gap: 25px;
-        align-items: center;
-    }
-
-    .company-card {
-        width: 90vw;
-        /* Nearly full width on small phones */
-        height: 280px;
-        /* Reduced height for easier scrolling */
-    }
-
-    .company-card-front img {
-        max-height: 50px;
-    }
-
-    .company-card-back h3 {
-        font-size: 1.2rem;
-        margin-bottom: 12px;
-    }
-
-    .company-card-back p {
-        font-size: 0.95rem;
-    }
 
     /* Reduce education item padding and font sizes */
     #education {
