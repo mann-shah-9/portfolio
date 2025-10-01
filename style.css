@@ -465,11 +465,6 @@ body {
 
 /* =========== HEADER STYLES =========== */
 
-/* 
-   Fixed header with dark background and subtle shadow
-   Stays on top during scroll, full width
-   Smooth transition for interactive changes (e.g., shrinking/expanding on scroll)
-*/
 header {
     background-color: #070e14;
     color: white;
@@ -666,7 +661,7 @@ header {
 /* Phones (max-width: 576px) */
 @media (max-width: 576px) {
     .section {
-        padding: 35px 0;
+        padding: 45px 0;
     }
 
     .logo h2 {
@@ -686,6 +681,7 @@ header {
     .section-title {
         font-size: 1.7rem;
         margin-bottom: 40px;
+        margin-top: 40px;
     }
 }
 
