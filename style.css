@@ -1271,12 +1271,16 @@ header {
 
 /* Flip card container with flexible width, max width for desktop */
 .company-card {
-    perspective: 1000px; /* required for 3D flip */
-    cursor: pointer; /* pointer for interactivity */
+    perspective: 1000px;
+    /* required for 3D flip */
+    cursor: pointer;
+    /* pointer for interactivity */
     width: 100%;
-    max-width: 500px; /* desktop max width */
+    max-width: 500px;
+    /* desktop max width */
     height: auto;
-    aspect-ratio: 1 / 1; /* maintain square aspect ratio */
+    aspect-ratio: 1 / 1;
+    /* maintain square aspect ratio */
     margin: 0 auto;
 }
 
@@ -1304,7 +1308,8 @@ header {
     position: absolute;
     width: 100%;
     height: 100%;
-    -webkit-backface-visibility: hidden; /* Safari */
+    -webkit-backface-visibility: hidden;
+    /* Safari */
     backface-visibility: hidden;
     border-radius: 10px;
     display: flex;
@@ -1313,7 +1318,8 @@ header {
     align-items: center;
     padding: 20px;
     box-sizing: border-box;
-    overflow-wrap: break-word; /* prevent overflow */
+    overflow-wrap: break-word;
+    /* prevent overflow */
 }
 
 /* Front side white background */
@@ -1334,7 +1340,8 @@ header {
     color: black;
     transform: rotateY(180deg);
     text-align: left;
-    overflow-y: auto; /* allow scroll if needed */
+    overflow-y: auto;
+    /* allow scroll if needed */
 }
 
 /* Back side heading */
@@ -1361,9 +1368,11 @@ header {
     .company-card {
         max-width: 420px;
     }
+
     .company-card-back h3 {
         font-size: 1.3rem;
     }
+
     .company-card-back p {
         font-size: 1rem;
     }
@@ -1376,21 +1385,28 @@ header {
         gap: 25px;
         align-items: center;
     }
+
     .company-card {
         max-width: 90vw;
-        height: auto; /* height auto for content */
+        height: auto;
+        /* height auto for content */
         aspect-ratio: auto;
     }
+
     .company-card-inner {
-        min-height: 280px; /* minimum height for usability */
+        min-height: 280px;
+        /* minimum height for usability */
     }
+
     .company-card-front img {
         max-height: 50px;
     }
+
     .company-card-back h3 {
         font-size: 1.1rem;
         margin-bottom: 12px;
     }
+
     .company-card-back p {
         font-size: 0.95rem;
     }
@@ -1439,6 +1455,7 @@ header {
 
 /* Tablet devices (up to 768px) */
 @media (max-width: 768px) {
+
     /* Education padding reduced */
     #education {
         padding: 40px 15px;
@@ -1953,125 +1970,6 @@ footer {
     outline: none;
 }
 
-/* =========== FOOTER VISITOR COUNTER STYLES =========== */
-
-.visitor-counter {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: all 0.3s ease;
-    max-width: 400px;
-    margin-left: auto;
-    margin-right: auto;
-    cursor: default;
-}
-
-.visitor-counter:hover {
-    background: rgba(255, 255, 255, 0.15);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
-
-.counter-icon {
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(135deg, #3498db, #2980b9);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
-    color: white;
-}
-
-.counter-content {
-    flex: 1;
-}
-
-.counter-number {
-    font-size: 2.2rem;
-    font-weight: 700;
-    color: #3498db;
-    line-height: 1;
-    margin-bottom: 5px;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.counter-label {
-    font-size: 0.9rem;
-    color: #ecf0f1;
-    margin-bottom: 3px;
-    font-weight: 500;
-}
-
-.counter-subtext {
-    font-size: 0.8rem;
-    color: #bdc3c7;
-    font-style: italic;
-}
-
-.counter-stats {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.stat-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 12px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 6px;
-    transition: all 0.3s ease;
-    cursor: default;
-}
-
-.stat-item:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.stat-item i {
-    color: #3498db;
-    width: 16px;
-    text-align: center;
-}
-
-.stat-item span {
-    font-size: 0.85rem;
-    color: #ecf0f1;
-}
-
-.stat-item strong {
-    color: #3498db;
-    font-weight: 600;
-}
-
-/* Pulse animation for updated counter */
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.05);
-    }
-
-    100% {
-        transform: scale(1);
-    }
-}
-
-.counter-number.updated {
-    animation: pulse 0.5s ease-in-out;
-}
-
 /* =========== CONTACT ICONS =========== */
 
 .contact-icons {
@@ -2099,6 +1997,169 @@ footer {
     background-color: #3498db;
     transform: translateY(-3px);
     outline: none;
+}
+
+/* Security Tip Widget Styles */
+.security-tip-widget {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.05) 100%);
+    border-radius: 12px;
+    padding: 0;
+    border: 1px solid rgba(52, 152, 219, 0.2);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.security-tip-widget:hover {
+    border-color: rgba(52, 152, 219, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.tip-header {
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.2) 0%, rgba(41, 128, 185, 0.1) 100%);
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(52, 152, 219, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.tip-header i {
+    color: #3498db;
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+}
+
+.tip-header span {
+    color: #ecf0f1;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+}
+
+.tip-content {
+    padding: 20px;
+}
+
+.tip-content p {
+    color: #ecf0f1;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    text-align: left;
+    font-weight: 400;
+}
+
+.tip-source {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: rgba(52, 152, 219, 0.1);
+    border-radius: 6px;
+    border-left: 3px solid #3498db;
+}
+
+.tip-source i {
+    color: #3498db;
+    font-size: 0.8rem;
+}
+
+.tip-source span {
+    color: #bdc3c7;
+    font-size: 0.8rem;
+    font-style: italic;
+    font-weight: 500;
+}
+
+.refresh-tip-btn {
+    width: 100%;
+    padding: 12px 20px;
+    background: rgba(52, 152, 219, 0.1);
+    border: 1px solid rgba(52, 152, 219, 0.3);
+    color: #3498db;
+    border-radius: 0 0 10px 10px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.refresh-tip-btn:hover {
+    background: rgba(52, 152, 219, 0.2);
+    color: #ecf0f1;
+    border-color: #3498db;
+}
+
+.refresh-tip-btn:active {
+    transform: scale(0.98);
+}
+
+.refresh-tip-btn i {
+    transition: transform 0.3s ease;
+}
+
+.refresh-tip-btn:hover i {
+    transform: rotate(180deg);
+}
+
+/* Animation for tip refresh */
+.tip-content p {
+    transition: opacity 0.3s ease;
+}
+
+.tip-content p.fade-out {
+    opacity: 0;
+}
+
+.tip-content p.fade-in {
+    opacity: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .security-tip-widget {
+        margin: 0 10px;
+    }
+
+    .tip-header {
+        padding: 12px 15px;
+    }
+
+    .tip-content {
+        padding: 15px;
+    }
+
+    .tip-content p {
+        font-size: 0.9rem;
+    }
+
+    .refresh-tip-btn {
+        padding: 10px 15px;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .tip-header {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+    }
+
+    .tip-content p {
+        text-align: center;
+    }
+
+    .tip-source {
+        justify-content: center;
+    }
 }
 
 /* =========== FOOTER BOTTOM =========== */

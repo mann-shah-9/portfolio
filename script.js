@@ -143,98 +143,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-
-// =========== VISITOR COUNTER FUNCTIONALITY ===========
-
-document.addEventListener('DOMContentLoaded', function () {
-    initializeVisitorCounter();
-
-    function initializeVisitorCounter() {
-        const today = new Date().toDateString();
-
-        let totalVisitors = parseInt(localStorage.getItem('totalVisitors')) || 0;
-        let todayVisitors = parseInt(localStorage.getItem('todayVisitors')) || 0;
-        let lastVisitDate = localStorage.getItem('lastVisitDate');
-
-        if (lastVisitDate !== today) {
-            todayVisitors = 0;
-            localStorage.setItem('lastVisitDate', today);
-        }
-
-        const sessionVisited = sessionStorage.getItem('sessionVisited');
-        if (!sessionVisited) {
-            totalVisitors++;
-            todayVisitors++;
-            localStorage.setItem('totalVisitors', totalVisitors);
-            localStorage.setItem('todayVisitors', todayVisitors);
-            sessionStorage.setItem('sessionVisited', 'true');
-        }
-
-        const onlineUsers = Math.floor(Math.random() * 10) + 1;
-
-        animateCounter('visitorCount', totalVisitors);
-        animateCounter('todayCount', todayVisitors);
-        animateCounter('onlineCount', onlineUsers);
-
-        setInterval(() => {
-            const newOnlineUsers = Math.floor(Math.random() * 10) + 1;
-            animateCounter('onlineCount', newOnlineUsers);
-        }, 30000);
-    }
-
-    function animateCounter(elementId, targetValue) {
-        const element = document.getElementById(elementId);
-        if (!element) return;
-        const currentValue = parseInt(element.textContent) || 0;
-
-        if (currentValue === targetValue) return;
-
-        element.classList.add('updated');
-
-        setTimeout(() => {
-            element.classList.remove('updated');
-        }, 500);
-
-        let current = currentValue;
-        const increment = targetValue > currentValue ? 1 : -1;
-        const stepTime = Math.abs(Math.floor(1000 / Math.max(Math.abs(targetValue - currentValue), 1)));
-
-        const timer = setInterval(() => {
-            current += increment;
-            element.textContent = current;
-            if (current === targetValue) clearInterval(timer);
-        }, stepTime);
-    }
-
-    // Periodic update every 5 minutes for counters
-    setInterval(() => {
-        const totalVisitors = parseInt(localStorage.getItem('totalVisitors')) || 0;
-        const todayVisitors = parseInt(localStorage.getItem('todayVisitors')) || 0;
-
-        animateCounter('visitorCount', totalVisitors);
-        animateCounter('todayCount', todayVisitors);
-    }, 300000);
-});
-
-
-// =========== SIMULATE REAL TRAFFIC PATTERNS ===========
-
-function simulateRealTraffic() {
-    const hour = new Date().getHours();
-    let trafficMultiplier = 1;
-
-    if (hour >= 9 && hour <= 17) {
-        trafficMultiplier = 1.5; // Business hours
-    } else if (hour >= 18 && hour <= 22) {
-        trafficMultiplier = 1.2; // Evening
-    } else {
-        trafficMultiplier = 0.8; // Night time
-    }
-
-    return trafficMultiplier;
-}
-
-
 // =========== CYBER LOADER FUNCTIONALITY ===========
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -300,16 +208,49 @@ window.addEventListener('load', function () {
     }, 6000); // Max 6 seconds for loading screen
 });
 
-const now = Date.now();
-const sessionVisited = sessionStorage.getItem('sessionVisited');
-const lastVisit = localStorage.getItem('lastVisitTime');
+const securityTips = [
+    "Enable two-factor authentication on all important accounts to add an extra layer of security.",
+    "Regularly update your software and operating systems to patch security vulnerabilities and protect against threats.",
+    "Use a VPN when connecting to public Wi-Fi networks to encrypt your internet connection and protect your data.",
+    "Be cautious of phishing emails asking for personal information - verify sender authenticity before clicking links.",
+    "Backup your important data regularly to secure cloud storage or external drives to prevent data loss.",
+    "Use unique, strong passwords for different online accounts and consider using a password manager.",
+    "Verify website SSL certificates before entering sensitive data to ensure secure connections.",
+    "Regularly review and update your social media privacy settings to control your digital footprint.",
+    "Enable biometric authentication where available for more secure and convenient access to devices.",
+    "Use encrypted messaging apps for sensitive communications to protect your privacy.",
+    "Regularly monitor your financial statements for unauthorized transactions and set up alerts.",
+    "Be wary of unsolicited tech support calls - legitimate companies won't contact you unexpectedly.",
+    "Use ad blockers and anti-tracking browser extensions to enhance your online privacy.",
+    "Secure your home network with a strong Wi-Fi password and WPA3 encryption if available."
+];
 
-// If no session visit or last visit was long ago, count as new visit.
-if (!sessionVisited || (lastVisit && now - lastVisit > 30 * 60 * 1000)) { // 30 minutes session timeout
-  totalVisitors++;
-  todayVisitors++;
-  localStorage.setItem('totalVisitors', totalVisitors);
-  localStorage.setItem('todayVisitors', todayVisitors);
-  localStorage.setItem('lastVisitTime', now);
-  sessionStorage.setItem('sessionVisited', 'true');
+function refreshTip() {
+    const tipElement = document.getElementById('dailyTip');
+
+    // Fade out current tip
+    tipElement.classList.add('fade-out');
+
+    setTimeout(() => {
+        // Get new random tip
+        const randomTip = securityTips[Math.floor(Math.random() * securityTips.length)];
+        tipElement.textContent = randomTip;
+
+        // Fade in new tip
+        tipElement.classList.remove('fade-out');
+        tipElement.classList.add('fade-in');
+
+        // Remove fade-in class after animation
+        setTimeout(() => {
+            tipElement.classList.remove('fade-in');
+        }, 300);
+    }, 300);
 }
+
+// Initialize with a random tip on page load
+document.addEventListener('DOMContentLoaded', function () {
+    refreshTip();
+
+    // Auto-refresh tip every 2 minutes (optional)
+    setInterval(refreshTip, 120000);
+});

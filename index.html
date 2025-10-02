@@ -496,26 +496,23 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>Website Statistics</h3>
-                    <div class="visitor-counter">
-                        <div class="counter-icon">
-                            <i class="fas fa-eye"></i>
+                    <h3>Security Tip of the Day</h3>
+                    <div class="security-tip-widget">
+                        <div class="tip-header">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Daily Security Advice</span>
                         </div>
-                        <div class="counter-content">
-                            <div class="counter-number" id="visitorCount">0</div>
-                            <div class="counter-label">Total Visitors</div>
-                            <div class="counter-subtext">Thank you for visiting!</div>
+                        <div class="tip-content">
+                            <p id="dailyTip">Enable two-factor authentication on all important accounts.</p>
+                            <div class="tip-source">
+                                <i class="fas fa-certificate"></i>
+                                <span>Cybersecurity Best Practice</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="counter-stats">
-                        <div class="stat-item">
-                            <i class="fas fa-users"></i>
-                            <span>Visitors Today: <strong id="todayCount">0</strong></span>
-                        </div>
-                        <div class="stat-item">
-                            <i class="fas fa-globe"></i>
-                            <span>Online Now: <strong id="onlineCount">0</strong></span>
-                        </div>
+                        <button class="refresh-tip-btn" onclick="refreshTip()">
+                            <i class="fas fa-sync-alt"></i>
+                            New Tip
+                        </button>
                     </div>
                 </div>
 
